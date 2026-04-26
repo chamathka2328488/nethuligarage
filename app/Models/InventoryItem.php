@@ -20,7 +20,7 @@ class InventoryItem extends Model
         'notes',
     ];
 
-    // Accessor: returns stock status label
+    //  Accessor: returns stock status label
     public function getStockStatusAttribute(): string
     {
         if ($this->quantity === 0) return 'out_of_stock';
