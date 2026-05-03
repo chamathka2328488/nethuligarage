@@ -253,9 +253,26 @@ export default function QuotationIndex() {
                                 <div>
                                     <p className="font-semibold mb-1">Damage Images</p>
                                     <div className="flex flex-wrap gap-2">
-                                        {viewQuote.images.map(img => (
-                                            <img key={img.id} src={`/storage/${img.image_path}`} alt="damage" className="w-24 h-24 object-cover rounded border" />
-                                        ))}
+                                        {viewQuote.images.map(img => {
+                                            // Normalize path: remove leading /storage/ if already present
+                                            const imgPath = img.image_path.replace(/^\/storage\//, '');
+                                            return (
+                                                <a key={img.id} href={`/storage/${imgPath}`} target="_blank" rel="noopener noreferrer" title="Click to open full size">
+                                                    <img
+                                                        src={`/storage/${imgPath}`}
+                                                        alt="damage"
+                                                        className="w-24 h-24 object-cover rounded border hover:opacity-80 cursor-pointer transition-opacity"
+                                                        onError={(e) => {
+                                                            // Try alternative path if image fails to load
+                                                            const target = e.currentTarget;
+                                                            if (!target.src.includes('quotation_images')) {
+                                                                target.src = `/storage/quotation_images/${imgPath.split('/').pop()}`;
+                                                            }
+                                                        }}
+                                                    />
+                                                </a>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             )}
