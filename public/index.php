@@ -11,7 +11,10 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 }
 
 // Register the Composer autoloader...
-require __DIR__.'/vendor/autoload.php';
-$app = require_once __DIR__.'/bootstrap/app.php';
+// ADDED ../ HERE
+require __DIR__.'/../vendor/autoload.php'; 
+
+// ADDED ../ HERE
+$app = require_once __DIR__.'/../bootstrap/app.php'; 
 
 $app->handleRequest(Request::capture());
